@@ -1,28 +1,24 @@
 local on_attach = require("util.lsp").on_attach
 
 local config = function()
+  require("neoconf").setup({})
+
+  local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
 	local lspconfig = require("lspconfig")
 
 	local signs = { Error = "x", Warn = "!", Hint = "+ ", Info = "i" }
+
 	for type, icon in pairs(signs) do
 		local hl = "DiagnosticSign" .. type
 		vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 	end
 
-	-- local on_attach = function(client, bufnr)
-		--keyoptions
-		-- local opts = { noremap = true, silent = true, buffer = bufnr }
+	local capabilities = cmp_nvim_lsp.default_capabilities()
 
-		--set keybinds
-		-- vim.keymap.set("n", "gf", "<cmd>Lspsaga lsp_finder<CR>", opts)
-		-- vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-		-- vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts)
-
-		-- vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
-	-- end
 	-- python
 	lspconfig.pyright.setup({
-		-- capabilities = capabilities
+		capabilities = capabilities,
 		on_attach = on_attach,
 		settings = {
 			pyright = {
@@ -38,7 +34,7 @@ local config = function()
 	})
 	-- lua
 	lspconfig.lua_ls.setup({
-
+    capabilities = capabilities,
 		on_attach = on_attach,
 		settings = {
 			Lua = {
@@ -66,7 +62,7 @@ local config = function()
 	lspconfig.efm.setup({
 		filetypes = {
 			"lua",
-      "python",
+			"python",
 		},
 		init_options = {
 			documentFormatting = true,
@@ -107,5 +103,6 @@ return {
 		"windwp/nvim-autopairs",
 		"williamboman/mason.nvim",
 		"creativenull/efmls-configs-nvim",
+    "hrsh7th/cmp-nvim-lsp",
 	},
 }
