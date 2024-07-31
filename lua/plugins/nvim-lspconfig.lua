@@ -1,9 +1,9 @@
 local on_attach = require("util.lsp").on_attach
 
 local config = function()
-  require("neoconf").setup({})
+	require("neoconf").setup({})
 
-  local cmp_nvim_lsp = require("cmp_nvim_lsp")
+	local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
 	local lspconfig = require("lspconfig")
 
@@ -34,7 +34,7 @@ local config = function()
 	})
 	-- lua
 	lspconfig.lua_ls.setup({
-    capabilities = capabilities,
+		capabilities = capabilities,
 		on_attach = on_attach,
 		settings = {
 			Lua = {
@@ -80,6 +80,7 @@ local config = function()
 		},
 	})
 
+	-- Format on Save
 	local lsp_fmt_group = vim.api.nvim_create_augroup("LspFormattingGroup", {})
 	vim.api.nvim_create_autocmd("BufWritePost", {
 		group = lsp_fmt_group,
@@ -103,6 +104,6 @@ return {
 		"windwp/nvim-autopairs",
 		"williamboman/mason.nvim",
 		"creativenull/efmls-configs-nvim",
-    "hrsh7th/cmp-nvim-lsp",
+		"hrsh7th/cmp-nvim-lsp",
 	},
 }
